@@ -28,6 +28,7 @@ interface Props {
 	filter: (font: Font) => boolean;
 	limit: number;
 	sort: SortOption;
+	configureFontManager: (fontManager: FontManager) => void;
 }
 
 interface State {
@@ -57,6 +58,7 @@ export default class FontPicker extends PureComponent<Props, State> {
 		filter: OPTIONS_DEFAULTS.filter,
 		limit: OPTIONS_DEFAULTS.limit,
 		sort: OPTIONS_DEFAULTS.sort,
+		configureFontManager: (_: FontManager): void => {}, // eslint-disable-line @typescript-eslint/no-empty-function
 	};
 
 	state: Readonly<State> = {
@@ -79,6 +81,7 @@ export default class FontPicker extends PureComponent<Props, State> {
 			limit,
 			sort,
 			onChange,
+			configureFontManager,
 		} = this.props;
 
 		const options: Options = {
@@ -93,7 +96,10 @@ export default class FontPicker extends PureComponent<Props, State> {
 		};
 
 		// Initialize FontManager object
-		this.fontManager = new FontManager(apiKey, activeFontFamily, options, onChange);
+		var fontManager = new FontManager(apiKey, activeFontFamily, options, onChange);
+		configureFontManager(fontManager);
+
+		this.fontManager = fontManager;
 	}
 
 	componentDidMount = (): void => {

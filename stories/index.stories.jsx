@@ -15,6 +15,7 @@ function OnePicker() {
 				apiKey={API_KEY}
 				activeFontFamily={activeFontFamily}
 				onChange={(nextFont) => setActiveFontFamily(nextFont.family)}
+				configureFontManager={(fm) => fm.addFont('Faustina', 0)}
 			/>
 			<p className="apply-font">The font will be applied to this text.</p>
 		</div>
